@@ -1,0 +1,9 @@
+# Fichiers sensibles Docker
+docker/mysql/data/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Dossier frontend vide
+frontend/

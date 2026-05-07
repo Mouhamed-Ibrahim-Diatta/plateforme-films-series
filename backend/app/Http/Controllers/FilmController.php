@@ -43,12 +43,15 @@ class FilmController extends Controller
     }
 
     // Détail d'un film
-    public function show(Film $film)
-    {
-        return Inertia::render('Films/Show', [
-            'film' => $film,
-        ]);
-    }
+    // Détail d'un film avec ses avis
+public function show(Film $film)
+{
+    $film->load(['avis.user']);
+
+    return Inertia::render('Films/Show', [
+        'film' => $film,
+    ]);
+}
 
     // Pas utilisé pour le prototype
     public function edit(Film $film) {}

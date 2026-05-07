@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\AvisController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,9 +10,20 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
+// Dashboard (redirect après login)
+Route::get('/dashboard', function () {
+    return redirect('/films');
+})->middleware('auth')->name('dashboard');
+
 // Films (liste, ajout, détail)
 Route::resource('films', FilmController::class)
     ->only(['index', 'create', 'store', 'show']);
+
+// Avis (authentifié seulement)
+Route::middleware('auth')->group(function () {
+    Route::post('/avis', [AvisController::class, 'store'])->name('avis.store');
+    Route::delete('/avis/{avis}', [AvisController::class, 'destroy'])->name('avis.destroy');
+});
 
 // Auth (généré par Breeze)
 require __DIR__.'/auth.php';

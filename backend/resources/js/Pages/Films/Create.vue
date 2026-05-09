@@ -9,12 +9,13 @@ const form = useForm({
   annee:          new Date().getFullYear(),
   realisateur:    '',
   duree_minutes:  '',
+  affiche:        null,
 })
 
 const GENRES = ['Action', 'Comédie', 'Drame', 'Horreur', 'Science-fiction', 'Thriller', 'Animation', 'Documentaire']
 
 const submit = () => {
-  form.post('/films')
+  form.post('/films', { forceFormData: true })
 }
 </script>
 
@@ -102,6 +103,18 @@ const submit = () => {
               placeholder="Résumé du film..."
               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
             />
+          </div>
+
+          <!-- Affiche -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Affiche (image)</label>
+            <input
+              type="file"
+              accept="image/*"
+              @change="form.affiche = $event.target.files[0]"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            />
+            <p v-if="form.errors.affiche" class="text-red-500 text-xs mt-1">{{ form.errors.affiche }}</p>
           </div>
 
           <!-- Boutons -->

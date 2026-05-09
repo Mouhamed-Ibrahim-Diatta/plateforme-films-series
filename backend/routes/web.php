@@ -26,4 +26,11 @@ Route::middleware('auth')->group(function () {
 });
 
 // Auth (généré par Breeze)
+use App\Http\Controllers\ProfilController;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profil', [ProfilController::class, 'edit'])->name('profil.edit');
+    Route::patch('/profil', [ProfilController::class, 'update'])->name('profil.update');
+    Route::patch('/profil/password', [ProfilController::class, 'updatePassword'])->name('profil.password');
+});
 require __DIR__.'/auth.php';

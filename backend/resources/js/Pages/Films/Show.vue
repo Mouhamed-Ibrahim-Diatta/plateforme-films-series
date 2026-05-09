@@ -40,9 +40,13 @@ const submitAvis = () => {
       <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-8">
         <div class="flex flex-col md:flex-row">
 
-          <!-- Emoji genre -->
-          <div class="w-full md:w-56 bg-indigo-50 flex items-center justify-center text-8xl py-12 shrink-0">
-            {{ GENRES[film.genre] ?? '🎬' }}
+          <!-- Affiche ou Emoji genre -->
+          <div class="w-full md:w-56 bg-indigo-50 flex items-center justify-center py-12 shrink-0">
+            <img v-if="film.affiche"
+              :src="`/storage/${film.affiche}`"
+              :alt="film.titre"
+              class="w-full h-full object-cover" />
+            <span v-else class="text-8xl">{{ GENRES[film.genre] ?? '🎬' }}</span>
           </div>
 
           <!-- Infos -->

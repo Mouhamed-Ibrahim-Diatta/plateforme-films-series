@@ -11,7 +11,7 @@ class Film extends Model
 
     protected $fillable = [
         'titre', 'description', 'genre', 'annee',
-        'realisateur', 'affiche', 'note_moyenne', 'duree_minutes',
+        'realisateur', 'affiche', 'note_moyenne', 'duree_minutes', 'affiche',
     ];
 
     protected $casts = [

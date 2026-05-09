@@ -1,20 +1,35 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Film;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
 class FilmController extends Controller
 {
-    // Liste des films
-    public function index()
+    // Liste des films avec recherche et filtres
+    public function index(Request $request)
     {
-        $films = Film::orderByDesc('created_at')->get();
+        $query = Film::query();
+
+        // Recherche par titre
+        if ($request->filled('search')) {
+            $query->where('titre', 'like', '%' . $request->search . '%');
+        }
+
+        // Filtre par genre
+        if ($request->filled('genre')) {
+            $query->where('genre', $request->genre);
+        }
+
+        // Filtre par année
+        if ($request->filled('annee')) {
+            $query->where('annee', $request->annee);
+        }
+
+        $films = $query->orderByDesc('created_at')->get();
 
         return Inertia::render('Films/Index', [
-            'films' => $films,
+            'films'   => $films,
+            'filters' => $request->only(['search', 'genre', 'annee']),
         ]);
     }
 
@@ -35,23 +50,19 @@ class FilmController extends Controller
             'realisateur'   => 'nullable|string|max:255',
             'duree_minutes' => 'nullable|integer|min:1',
         ]);
-
         Film::create($data);
-
         return redirect()->route('films.index')
             ->with('success', 'Film ajouté avec succès !');
     }
 
-    // Détail d'un film
     // Détail d'un film avec ses avis
-public function show(Film $film)
-{
-    $film->load(['avis.user']);
-
-    return Inertia::render('Films/Show', [
-        'film' => $film,
-    ]);
-}
+    public function show(Film $film)
+    {
+        $film->load(['avis.user']);
+        return Inertia::render('Films/Show', [
+            'film' => $film,
+        ]);
+    }
 
     // Pas utilisé pour le prototype
     public function edit(Film $film) {}

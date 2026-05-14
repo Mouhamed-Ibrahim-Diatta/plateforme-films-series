@@ -1,7 +1,11 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
+import { usePage } from '@inertiajs/vue3'
 
 defineProps({ title: String })
+
+const { props } = usePage()
+const user = props.auth?.user
 </script>
 
 <template>
@@ -15,6 +19,15 @@ defineProps({ title: String })
         </Link>
         <div class="flex gap-6 text-sm font-medium text-gray-600">
           <Link href="/films" class="hover:text-indigo-600">Films</Link>
+
+          <template v-if="user">
+            <span class="text-gray-800 font-semibold">👤 {{ user.name }}</span>
+            <Link href="/logout" method="post" as="button" class="hover:text-red-500">Déconnexion</Link>
+          </template>
+          <template v-else>
+            <Link href="/login" class="hover:text-indigo-600">Connexion</Link>
+            <Link href="/register" class="hover:text-indigo-600">Inscription</Link>
+          </template>
         </div>
       </div>
     </nav>

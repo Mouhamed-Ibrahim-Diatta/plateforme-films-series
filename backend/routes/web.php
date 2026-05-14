@@ -16,14 +16,20 @@ Route::get('/dashboard', function () {
     return redirect('/films');
 })->middleware('auth')->name('dashboard');
 
-// Films et Séries publics (liste, détail)
+// Films publics (liste, détail)
 Route::resource('films', FilmController::class)->only(['index', 'show']);
+
+// Séries protégées (ajout) - DOIT ETRE AVANT LE SHOW pour éviter l'erreur 404
+Route::middleware('auth')->group(function () {
+    Route::resource('series', SerieController::class)->only(['create', 'store'])->parameters(['series' => 'series']);
+});
+
+// Séries publics (liste, détail)
 Route::resource('series', SerieController::class)->only(['index', 'show'])->parameters(['series' => 'series']);
 
-// Films et Séries protégés (ajout)
+// Films protégés (ajout)
 Route::middleware('auth')->group(function () {
     Route::resource('films', FilmController::class)->only(['create', 'store']);
-    Route::resource('series', SerieController::class)->only(['create', 'store'])->parameters(['series' => 'series']);
 });
 
 // Avis (authentifié seulement)

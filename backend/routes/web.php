@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\SerieController;
 use App\Http\Controllers\AvisController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
@@ -15,14 +16,14 @@ Route::get('/dashboard', function () {
     return redirect('/films');
 })->middleware('auth')->name('dashboard');
 
-// Films publics (liste, détail)
-Route::resource('films', FilmController::class)
-    ->only(['index', 'show']);
+// Films et Séries publics (liste, détail)
+Route::resource('films', FilmController::class)->only(['index', 'show']);
+Route::resource('series', SerieController::class)->only(['index', 'show'])->parameters(['series' => 'series']);
 
-// Films protégés (ajout)
+// Films et Séries protégés (ajout)
 Route::middleware('auth')->group(function () {
-    Route::resource('films', FilmController::class)
-        ->only(['create', 'store']);
+    Route::resource('films', FilmController::class)->only(['create', 'store']);
+    Route::resource('series', SerieController::class)->only(['create', 'store'])->parameters(['series' => 'series']);
 });
 
 // Avis (authentifié seulement)

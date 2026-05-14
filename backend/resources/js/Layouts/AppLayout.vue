@@ -19,6 +19,7 @@ const user = props.auth?.user
         </Link>
         <div class="flex gap-6 text-sm font-medium text-gray-600">
           <Link href="/films" class="hover:text-indigo-600">Films</Link>
+          <Link href="/series" class="hover:text-indigo-600">Séries</Link>
 
           <template v-if="user">
             <span class="text-gray-800 font-semibold">👤 {{ user.name }}</span>

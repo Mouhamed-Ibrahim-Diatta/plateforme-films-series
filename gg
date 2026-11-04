@@ -1,0 +1,153 @@
+Tu es un développeur Full-Stack Senior et un expert en UI/UX Design spécialisé dans la conception d'interfaces web professionnelles.
+
+Je souhaite que tu effectues une refonte complète de l'interface utilisateur de mon application CRUD existante.
+
+OBJECTIF PRINCIPAL :
+
+Transformer mon interface actuelle, que je trouve trop basique, en une application web moderne, professionnelle, ergonomique et parfaitement structurée.
+
+Je ne veux pas simplement changer les couleurs : je veux une véritable amélioration de l'architecture visuelle, de l'organisation des composants et de l'expérience utilisateur.
+
+1. Direction artistique
+
+Adopte un style :
+
+- Moderne, minimaliste et professionnel.
+- Inspiré des interfaces SaaS et des tableaux de bord administratifs premium.
+- Design sobre, élégant et cohérent.
+- Typographie moderne et lisible.
+- Palette de couleurs harmonieuse.
+- Icônes cohérentes et professionnelles.
+- Coins légèrement arrondis, ombres discrètes et séparations visuelles propres.
+
+2. Optimisation de l'espace
+
+C'est un point extrêmement important.
+
+Je ne veux aucun gaspillage inutile d'espace.
+
+- Exploite intelligemment toute la largeur disponible.
+- Réduis les marges et espacements excessifs.
+- Évite les composants trop grands.
+- Organise les informations de manière compacte, sans sacrifier la lisibilité.
+- Évite les grandes zones vides.
+- Adapte automatiquement l'interface aux différentes tailles d'écran.
+- Utilise une grille et des alignements cohérents.
+
+3. Structure de l'interface
+
+Organise l'application avec une véritable architecture administrative :
+
+Sidebar (menu latéral)
+
+- Logo et nom de l'application.
+- Navigation claire.
+- Icônes pour chaque rubrique.
+- Indication visuelle de la page active.
+- Possibilité de réduire ou développer le menu.
+
+Header (barre supérieure)
+
+- Titre de la page actuelle.
+- Fil d'Ariane si nécessaire.
+- Barre de recherche si pertinente.
+- Profil utilisateur et menu de compte.
+
+Zone principale
+
+- Organisation logique des informations.
+- Hiérarchie visuelle claire.
+- Utilisation optimale de l'espace.
+
+4. Amélioration des fonctionnalités CRUD
+
+Refais intégralement la présentation des opérations CRUD.
+
+Read – Consultation
+
+- Tableau moderne et professionnel.
+- En-têtes clairement identifiables.
+- Colonnes correctement dimensionnées.
+- Badges de statut si nécessaire.
+- Pagination.
+- Recherche instantanée.
+- Filtres pertinents.
+- Tri des colonnes.
+- Actions accessibles sans surcharger le tableau.
+
+Create – Création
+
+- Formulaires modernes et bien organisés.
+- Champs regroupés par catégories.
+- Labels explicites.
+- Validation visuelle.
+- Messages d'erreur compréhensibles.
+- Boutons d'action clairement identifiables.
+
+Update – Modification
+
+- Interface cohérente avec le formulaire de création.
+- Informations existantes préremplies.
+- Possibilité d'annuler les modifications.
+
+Delete – Suppression
+
+- Confirmation avant suppression.
+- Fenêtre modale élégante.
+- Message explicite sur les conséquences de l'action.
+
+5. Composants et interactions
+
+Améliore également :
+
+- Les boutons.
+- Les menus déroulants.
+- Les fenêtres modales.
+- Les notifications.
+- Les messages de succès et d'erreur.
+- Les états de chargement.
+- Les états vides lorsqu'aucune donnée n'est disponible.
+- Les animations de transition, avec modération.
+
+6. Responsive Design
+
+L'application doit être parfaitement utilisable sur :
+
+- Ordinateur.
+- Tablette.
+- Smartphone.
+
+Sur mobile, adapte le menu, les tableaux et les formulaires pour conserver une expérience agréable.
+
+7. Contraintes techniques IMPORTANTES
+
+Avant de modifier le code :
+
+1. Analyse toute la structure du projet.
+2. Identifie les technologies, frameworks et bibliothèques utilisés.
+3. Examine les composants existants et leur fonctionnement.
+4. Identifie les routes, les fonctionnalités CRUD et les connexions à la base de données.
+
+Ensuite :
+
+- Conserve intégralement la logique métier existante.
+- Ne supprime aucune fonctionnalité.
+- Ne modifie pas inutilement la structure de la base de données.
+- Ne casse aucune route ni aucun endpoint.
+- Réutilise les composants existants lorsque cela est pertinent.
+- Évite de dupliquer le code.
+- Organise le CSS proprement.
+- N'ajoute pas de dépendances inutiles.
+- Assure-toi que toutes les fonctionnalités continuent de fonctionner après la refonte.
+
+8. Résultat attendu
+
+Je veux une application qui donne réellement l'impression d'être un logiciel professionnel commercialisé, et non un simple projet CRUD scolaire.
+
+Privilégie la qualité visuelle, la cohérence, l'ergonomie et l'optimisation de l'espace.
+
+Ne te contente pas de proposer des modifications : analyse le projet et implémente directement la refonte dans les fichiers concernés.
+
+À la fin, vérifie le fonctionnement des opérations CRUD, la navigation, les formulaires et le responsive design.
+
+IMPORTANT : Ne modifie pas les fonctionnalités existantes pour privilégier uniquement l'apparence. Le design doit s'adapter à mon application, et non l'inverse.

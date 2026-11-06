@@ -1,0 +1,180 @@
+Je souhaite effectuer une refonte complète du design de la page d'accueil (Dashboard) de mon application COUR SUPRÊME – Système intégré de gestion.
+
+Utilise la capture d'écran fournie comme référence de l'interface actuelle.
+
+1. Objectif principal
+
+Transformer le tableau de bord actuel en une interface professionnelle, moderne, élégante et digne d'un système institutionnel destiné à une Cour suprême.
+
+L'interface actuelle est fonctionnelle, mais elle présente plusieurs défauts :
+
+- Trop d'espaces vides, notamment dans la partie inférieure.
+- Des cartes trop neutres et visuellement fades.
+- Une mauvaise répartition de l'espace disponible.
+- Un manque de hiérarchie entre les informations.
+- Des raccourcis de modules trop simples.
+- Un tableau de bord qui ne donne pas suffisamment l'impression d'un véritable outil de pilotage.
+
+Je veux une interface qui inspire sérieux, autorité, confiance et modernité.
+
+2. Identité visuelle
+
+Conserver l'identité visuelle existante :
+
+- Bordeaux foncé comme couleur principale.
+- Blanc et gris très clair pour les surfaces.
+- Quelques nuances de gris pour les textes secondaires.
+- Couleurs complémentaires discrètes pour les statuts et indicateurs.
+
+Améliorer considérablement l'utilisation des couleurs :
+
+- Éviter les grandes surfaces entièrement grises.
+- Ajouter des contrastes subtils.
+- Utiliser des ombres légères.
+- Ajouter des bordures fines et élégantes.
+- Utiliser des icônes cohérentes et modernes.
+- Appliquer des coins légèrement arrondis.
+
+3. Nouvelle organisation du Dashboard
+
+A. Barre latérale
+
+Conserver la navigation latérale bordeaux, mais améliorer son apparence :
+
+- Logo et nom COUR SUPRÊME mieux présentés.
+- Icônes modernes et uniformes.
+- Élément actif clairement identifiable.
+- Espacement régulier entre les modules.
+- Meilleure présentation de la section Mon compte en bas.
+
+B. En-tête principal
+
+Créer une zone d'accueil plus élégante et compacte :
+
+- Message de bienvenue personnalisé.
+- Date actuelle.
+- Nom et rôle de l'utilisateur.
+- Barre de recherche globale.
+- Accès rapide aux notifications et au profil.
+
+Éviter une bannière trop haute.
+
+C. Cartes statistiques
+
+Repenser complètement les trois cartes statistiques actuelles :
+
+- Décisions enregistrées.
+- Textes du Journal officiel.
+- Courriers en attente.
+
+Chaque carte doit avoir :
+
+- Une icône distinctive.
+- Un chiffre principal bien visible.
+- Un intitulé clair.
+- Une petite description complémentaire.
+- Un indicateur d'évolution si les données historiques existent.
+- Une couleur d'accent discrète.
+
+Les cartes doivent être visuellement différentes sans perdre leur cohérence.
+
+D. Section Activité et statistiques
+
+Ajouter une véritable section de pilotage pour exploiter l'espace actuellement vide.
+
+Prévoir :
+
+- Un graphique d'évolution des décisions enregistrées.
+- Une répartition des décisions par catégorie si les données existent.
+- Un aperçu des courriers reçus et traités.
+- Une visualisation des activités récentes.
+
+Ne jamais inventer de données : utiliser uniquement les données réellement disponibles dans l'application. Si certaines données n'existent pas, prévoir un état vide élégant.
+
+E. Modules de gestion
+
+Repenser les raccourcis des modules :
+
+- Décisions.
+- Journal officiel.
+- Courrier.
+- Tableaux de bord.
+- Utilisateurs.
+
+Créer des cartes plus modernes avec :
+
+- Une icône dans un conteneur coloré.
+- Un titre bien visible.
+- Une description courte.
+- Un indicateur du nombre d'éléments lorsque disponible.
+- Une interaction au survol (hover).
+- Une flèche ou un repère visuel indiquant que la carte est cliquable.
+
+Éviter les cartes trop grandes ou trop chargées.
+
+F. Activités récentes
+
+Créer une section dédiée aux dernières opérations :
+
+- Dernières décisions consultées ou enregistrées.
+- Derniers courriers enregistrés.
+- Dernières publications au Journal officiel.
+- Actions récentes des utilisateurs si disponibles.
+
+Présenter ces informations sous forme de liste chronologique claire et compacte.
+
+4. Gestion intelligente de l'espace
+
+C'est un point particulièrement important.
+
+Je ne veux plus de grands espaces vides inutilisés.
+
+Utiliser intelligemment toute la largeur disponible :
+
+- Créer une grille équilibrée.
+- Organiser les statistiques sur une ligne.
+- Utiliser une disposition en deux colonnes pour les graphiques et les activités.
+- Équilibrer les hauteurs des cartes.
+- Éviter les sections qui occupent toute la largeur sans raison.
+- Adapter automatiquement la disposition à la taille de l'écran.
+
+Attention : je ne veux pas simplement agrandir les cartes pour remplir l'espace. Je veux une meilleure organisation de l'information.
+
+5. Expérience utilisateur
+
+L'interface doit rester simple à comprendre.
+
+- Ne pas surcharger les écrans.
+- Limiter les informations secondaires visibles simultanément.
+- Utiliser des titres et sous-titres explicites.
+- Garder des actions accessibles rapidement.
+- Ajouter des états de chargement et des états vides élégants.
+- Prévoir des interactions discrètes et fluides.
+
+6. Contraintes techniques
+
+- Conserver toutes les fonctionnalités existantes.
+- Ne modifier aucune règle métier.
+- Ne pas supprimer de module.
+- Ne pas casser les routes existantes.
+- Ne pas modifier inutilement la structure de la base de données.
+- Réutiliser les composants existants lorsque c'est pertinent.
+- Connecter les nouveaux graphiques aux vraies données.
+- Respecter la logique d'authentification et les permissions des utilisateurs.
+- Garantir la compatibilité avec les écrans desktop, tablette et mobile.
+
+7. Résultat attendu
+
+Je veux un dashboard qui ressemble à un véritable logiciel institutionnel professionnel, avec une finition visuelle comparable aux applications SaaS modernes.
+
+Le résultat doit être :
+
+- Moderne et élégant.
+- Visuellement riche sans être surchargé.
+- Bien structuré.
+- Cohérent avec l'identité de la Cour suprême.
+- Agréable à utiliser au quotidien.
+
+IMPORTANT : Ne te contente pas de modifier les couleurs ou les bordures. Revois réellement la composition, la disposition des éléments, les proportions et la hiérarchie visuelle de toute la page d'accueil.
+
+Commence par analyser le code existant, puis effectue directement la refonte en conservant toutes les fonctionnalités opérationnelles.

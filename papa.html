@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Manager</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --success: #16a34a;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --dark: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #1e1b4b 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: var(--card);
+            padding: 0.5rem;
+            border-radius: 12px;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: none;
+            color: var(--secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .card-title h2 {
+            font-size: 1.25rem;
+        }
+
+        .count-pill {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #93c5fd;
+            background: rgba(37, 99, 235, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+
+        input, select {
+            padding: 0.75rem;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .preview {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .preview strong {
+            color: #22c55e;
+            font-size: 1.1rem;
+        }
+
+        .preview.warn strong {
+            color: var(--warning);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: #475569;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #334155;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--secondary);
+            border: 1px solid #334155;
+        }
+
+        .btn-ghost:hover {
+            color: var(--text);
+            border-color: var(--secondary);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .toolbar .search {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+
+        th {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .amount {
+            font-weight: 600;
+            color: #22c55e;
+            white-space: nowrap;
+        }
+
+        .amount.zero {
+            color: var(--warning);
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-btn {
+            padding: 0.5rem;
+            border: none;
+            background: transparent;
+            color: var(--secondary);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+        }
+
+        .empty-row td {
+            text-align: center;
+            color: var(--secondary);
+            font-style: italic;
+            padding: 2rem;
+        }
+
+        .total-card {
+            background: linear-gradient(135deg, var(--primary) 0%, #06b6d4 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .total-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .criteria-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(37, 99, 235, 0.2);
+            color: #60a5fa;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin: 0.125rem;
+        }
+
+        .hint {
+            color: var(--warning);
+            font-size: 0.75rem;
+            font-style: italic;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 1000;
+        }
+
+        .toast {
+            padding: 0.85rem 1.25rem;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            animation: slide-in 0.25s ease;
+            max-width: 320px;
+        }
+
+        .toast.success { background: var(--success); }
+        .toast.error { background: var(--danger); }
+        .toast.info { background: var(--primary); }
+
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        @media print {
+            body { background: white; color: black; }
+            .tabs, .btn-group, .toolbar, .actions, .header p, #toast-container { display: none !important; }
+            .card { box-shadow: none; border: 1px solid #ccc; }
+            .hidden { display: block !important; }
+        }
+    </style>
+</head>
+<body>
+    <div id="toast-container" aria-live="polite"></div>
+
+    <div class="container">
+        <header class="header">
+            <h1>💰 Budget Manager</h1>
+            <p>Gérez facilement vos budgets clubs et associations</p>
+        </header>
+
+        <div class="tabs" role="tablist">
+            <button class="tab active" data-tab="clubs" role="tab">Clubs Sportifs</button>
+            <button class="tab" data-tab="assos" role="tab">Associations</button>
+        </div>
+
+        <!-- Clubs Sportifs Section -->
+        <section id="clubs-section">
+            <div class="card">
+                <div class="card-title"><h2 id="club-form-title">➕ Nouveau Club</h2></div>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="club-name">Nom du club</label>
+                        <input type="text" id="club-name" placeholder="Ex: Club Dioko" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="checkbox-group" id="club-criteria"></div>
+
+                <div class="preview" id="club-preview"></div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="add-club">Ajouter le Club</button>
+                    <button class="btn btn-ghost hidden" id="cancel-club">Annuler</button>
+                    <button class="btn btn-secondary" id="reset-clubs">Tout Effacer</button>
+                    <button class="btn btn-secondary" id="export-clubs">⬇ Exporter CSV</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <h2>📋 Liste des Clubs</h2>
+                    <span class="count-pill" id="clubs-count">0 club</span>
+                </div>
+                <div class="toolbar">
+                    <input type="text" class="search" id="clubs-search" placeholder="🔍 Rechercher un club...">
+                </div>
+                <div class="table-container">
+                    <table id="clubs-table">
+                        <thead>
+                            <tr>
+                                <th>Club</th>
+                                <th>Critères</th>
+                                <th>Montant</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clubs-tbody"></tbody>
+                    </table>
+                </div>
+
+                <div class="total-card">
+                    <div>Total Distribué</div>
+                    <div class="total-amount" id="clubs-total">0 F CFA</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Associations Section -->
+        <section id="assos-section" class="hidden">
+            <div class="card">
+                <div class="card-title"><h2 id="asso-form-title">➕ Nouvelle Association</h2></div>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="asso-name">Nom de l'association</label>
+                        <input type="text" id="asso-name" placeholder="Ex: Association Dioko" autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="asso-amount">Montant (F CFA)</label>
+                        <input type="number" id="asso-amount" value="150000" min="0" step="1000">
+                    </div>
+                    <div class="input-group">
+                        <label for="asso-activites">Activités culturelles</label>
+                        <input type="text" id="asso-activites" placeholder="Ex: Théâtre, danse, musique" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="add-asso">Ajouter l'Association</button>
+                    <button class="btn btn-ghost hidden" id="cancel-asso">Annuler</button>
+                    <button class="btn btn-secondary" id="reset-assos">Tout Effacer</button>
+                    <button class="btn btn-secondary" id="export-assos">⬇ Exporter CSV</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <h2>📋 Liste des Associations</h2>
+                    <span class="count-pill" id="assos-count">0 association</span>
+                </div>
+                <div class="toolbar">
+                    <input type="text" class="search" id="assos-search" placeholder="🔍 Rechercher une association...">
+                </div>
+                <div class="table-container">
+                    <table id="assos-table">
+                        <thead>
+                            <tr>
+                                <th>Association</th>
+                                <th>Activités culturelles</th>
+                                <th>Montant</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="assos-tbody"></tbody>
+                    </table>
+                </div>
+
+                <div class="total-card">
+                    <div>Total Attribué</div>
+                    <div class="total-amount" id="assos-total">0 F CFA</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Single source of truth for club criteria: drives the checkboxes,
+        // the amount calculation and the badges. `required` criteria must all
+        // be checked before any amount is granted.
+        const CLUB_CRITERIA = [
+            { key: 'recip',   label: 'Récipient',            short: 'Récipient', amount: 50000, required: true },
+            { key: 'rapport', label: "Rapport d'activité",   short: 'Rapport',   amount: 50000, required: true },
+            { key: 'senior',  label: 'Équipe senior',        short: 'Senior',    amount: 25000 },
+            { key: 'cadet',   label: 'Équipe cadette',       short: 'Cadet',     amount: 25000 },
+            { key: 'citoyen', label: 'Activités citoyennes', short: 'Citoyen',   amount: 25000 },
+        ];
+
+        class BudgetManager {
+            constructor() {
+                this.clubs = this.loadFromStorage('clubs');
+                this.assos = this.loadFromStorage('assos');
+                this.editingClubId = null;
+                this.editingAssoId = null;
+                this.clubsFilter = '';
+                this.assosFilter = '';
+                this.init();
+            }
+
+            init() {
+                this.buildCriteriaCheckboxes();
+                this.setupEventListeners();
+                this.updateClubPreview();
+                this.render();
+            }
+
+            // --- Storage ---
+            loadFromStorage(key) {
+                try {
+                    const data = JSON.parse(localStorage.getItem(`budget-${key}`));
+                    if (!Array.isArray(data)) return [];
+                    // Normalise ids to strings (older records used numeric ids).
+                    return data.map(item => ({ ...item, id: String(item.id) }));
+                } catch {
+                    return [];
+                }
+            }
+
+            saveToStorage(key, data) {
+                try {
+                    localStorage.setItem(`budget-${key}`, JSON.stringify(data));
+                } catch {
+                    this.toast("Impossible d'enregistrer les données", 'error');
+                }
+            }
+
+            uid() {
+                return (crypto.randomUUID && crypto.randomUUID()) ||
+                    `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+            }
+
+            // --- Clubs ---
+            buildCriteriaCheckboxes() {
+                const container = document.getElementById('club-criteria');
+                container.innerHTML = CLUB_CRITERIA.map(c => `
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="club-${c.key}" data-key="${c.key}">
+                        <span>${c.label} (+${(c.amount / 1000)}k)${c.required ? ' *' : ''}</span>
+                    </label>
+                `).join('') + '<small class="hint">* critère obligatoire pour tout financement</small>';
+            }
+
+            readClubCriteria() {
+                const criteria = {};
+                CLUB_CRITERIA.forEach(c => {
+                    criteria[c.key] = document.getElementById(`club-${c.key}`).checked;
+                });
+                return criteria;
+            }
+
+            calculateClubAmount(criteria) {
+                const hasRequired = CLUB_CRITERIA
+                    .filter(c => c.required)
+                    .every(c => criteria[c.key]);
+                if (!hasRequired) return 0;
+
+                return CLUB_CRITERIA.reduce(
+                    (sum, c) => sum + (criteria[c.key] ? c.amount : 0), 0);
+            }
+
+            saveClub(name, criteria) {
+                if (this.editingClubId) {
+                    const club = this.clubs.find(c => c.id === this.editingClubId);
+                    if (club) { club.name = name; club.criteria = criteria; }
+                    this.toast('Club mis à jour', 'success');
+                    this.editingClubId = null;
+                } else {
+                    this.clubs.push({ id: this.uid(), name, criteria });
+                    this.toast('Club ajouté', 'success');
+                }
+                this.saveToStorage('clubs', this.clubs);
+                this.resetClubForm();
+                this.render();
+            }
+
+            startEditClub(id) {
+                const club = this.clubs.find(c => c.id === id);
+                if (!club) return;
+                this.editingClubId = id;
+                document.getElementById('club-name').value = club.name;
+                CLUB_CRITERIA.forEach(c => {
+                    document.getElementById(`club-${c.key}`).checked = !!club.criteria[c.key];
+                });
+                document.getElementById('club-form-title').textContent = '✏️ Modifier le Club';
+                document.getElementById('add-club').textContent = 'Mettre à jour';
+                document.getElementById('cancel-club').classList.remove('hidden');
+                this.updateClubPreview();
+                document.getElementById('club-name').focus();
+                document.querySelector('#clubs-section .card').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            deleteClub(id) {
+                const club = this.clubs.find(c => c.id === id);
+                if (!club || !confirm(`Supprimer « ${club.name} » ?`)) return;
+                this.clubs = this.clubs.filter(c => c.id !== id);
+                this.saveToStorage('clubs', this.clubs);
+                if (this.editingClubId === id) this.resetClubForm();
+                this.render();
+                this.toast('Club supprimé', 'info');
+            }
+
+            resetClubForm() {
+                this.editingClubId = null;
+                document.getElementById('club-name').value = '';
+                CLUB_CRITERIA.forEach(c => { document.getElementById(`club-${c.key}`).checked = false; });
+                document.getElementById('club-form-title').textContent = '➕ Nouveau Club';
+                document.getElementById('add-club').textContent = 'Ajouter le Club';
+                document.getElementById('cancel-club').classList.add('hidden');
+                this.updateClubPreview();
+            }
+
+            updateClubPreview() {
+                const criteria = this.readClubCriteria();
+                const amount = this.calculateClubAmount(criteria);
+                const preview = document.getElementById('club-preview');
+                if (amount === 0) {
+                    const missing = CLUB_CRITERIA
+                        .filter(c => c.required && !criteria[c.key])
+                        .map(c => c.short);
+                    preview.className = 'preview warn';
+                    preview.innerHTML = missing.length
+                        ? `Montant : <strong>0 F CFA</strong> — critère(s) obligatoire(s) manquant(s) : ${missing.join(', ')}`
+                        : `Montant estimé : <strong>0 F CFA</strong>`;
+                } else {
+                    preview.className = 'preview';
+                    preview.innerHTML = `Montant estimé : <strong>${this.formatMoney(amount)} F CFA</strong>`;
+                }
+            }
+
+            // --- Associations ---
+            saveAsso(name, amount, activites) {
+                if (this.editingAssoId) {
+                    const asso = this.assos.find(a => a.id === this.editingAssoId);
+                    if (asso) { asso.name = name; asso.amount = amount; asso.activites = activites; }
+                    this.toast('Association mise à jour', 'success');
+                    this.editingAssoId = null;
+                } else {
+                    this.assos.push({ id: this.uid(), name, amount, activites });
+                    this.toast('Association ajoutée', 'success');
+                }
+                this.saveToStorage('assos', this.assos);
+                this.resetAssoForm();
+                this.render();
+            }
+
+            startEditAsso(id) {
+                const asso = this.assos.find(a => a.id === id);
+                if (!asso) return;
+                this.editingAssoId = id;
+                document.getElementById('asso-name').value = asso.name;
+                document.getElementById('asso-amount').value = asso.amount;
+                document.getElementById('asso-activites').value = asso.activites || '';
+                document.getElementById('asso-form-title').textContent = "✏️ Modifier l'Association";
+                document.getElementById('add-asso').textContent = 'Mettre à jour';
+                document.getElementById('cancel-asso').classList.remove('hidden');
+                document.getElementById('asso-name').focus();
+                document.querySelector('#assos-section .card').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            deleteAsso(id) {
+                const asso = this.assos.find(a => a.id === id);
+                if (!asso || !confirm(`Supprimer « ${asso.name} » ?`)) return;
+                this.assos = this.assos.filter(a => a.id !== id);
+                this.saveToStorage('assos', this.assos);
+                if (this.editingAssoId === id) this.resetAssoForm();
+                this.render();
+                this.toast('Association supprimée', 'info');
+            }
+
+            resetAssoForm() {
+                this.editingAssoId = null;
+                document.getElementById('asso-name').value = '';
+                document.getElementById('asso-amount').value = '150000';
+                document.getElementById('asso-activites').value = '';
+                document.getElementById('asso-form-title').textContent = '➕ Nouvelle Association';
+                document.getElementById('add-asso').textContent = "Ajouter l'Association";
+                document.getElementById('cancel-asso').classList.add('hidden');
+            }
+
+            // --- Rendering ---
+            render() {
+                this.renderClubs();
+                this.renderAssos();
+            }
+
+            renderClubs() {
+                const tbody = document.getElementById('clubs-tbody');
+                const filter = this.clubsFilter.toLowerCase();
+                const visible = this.clubs.filter(c => c.name.toLowerCase().includes(filter));
+                let total = 0;
+
+                const rows = visible.map(club => {
+                    const amount = this.calculateClubAmount(club.criteria);
+                    total += amount;
+
+                    const badges = CLUB_CRITERIA
+                        .filter(c => club.criteria[c.key])
+                        .map(c => `<span class="criteria-badge">${c.short}</span>`)
+                        .join('');
+
+                    return `
+                        <tr>
+                            <td><strong>${this.escapeHtml(club.name)}</strong></td>
+                            <td>${badges || '<em>Aucun critère</em>'}</td>
+                            <td class="amount ${amount === 0 ? 'zero' : ''}">${this.formatMoney(amount)} F CFA</td>
+                            <td class="actions">
+                                <button class="icon-btn" data-action="edit-club" data-id="${club.id}" title="Modifier">✏️</button>
+                                <button class="icon-btn" data-action="delete-club" data-id="${club.id}" title="Supprimer">🗑️</button>
+                            </td>
+                        </tr>`;
+                }).join('');
+
+                tbody.innerHTML = rows || `<tr class="empty-row"><td colspan="4">${
+                    this.clubs.length ? 'Aucun club ne correspond à la recherche.' : 'Aucun club enregistré pour le moment.'
+                }</td></tr>`;
+
+                document.getElementById('clubs-total').textContent = `${this.formatMoney(total)} F CFA`;
+                document.getElementById('clubs-count').textContent =
+                    `${this.clubs.length} club${this.clubs.length > 1 ? 's' : ''}`;
+            }
+
+            renderAssos() {
+                const tbody = document.getElementById('assos-tbody');
+                const filter = this.assosFilter.toLowerCase();
+                const visible = this.assos.filter(a => a.name.toLowerCase().includes(filter));
+                let total = 0;
+
+                const rows = visible.map(asso => {
+                    total += asso.amount;
+                    return `
+                        <tr>
+                            <td><strong>${this.escapeHtml(asso.name)}</strong></td>
+                            <td>${asso.activites ? this.escapeHtml(asso.activites) : '<em>—</em>'}</td>
+                            <td class="amount">${this.formatMoney(asso.amount)} F CFA</td>
+                            <td class="actions">
+                                <button class="icon-btn" data-action="edit-asso" data-id="${asso.id}" title="Modifier">✏️</button>
+                                <button class="icon-btn" data-action="delete-asso" data-id="${asso.id}" title="Supprimer">🗑️</button>
+                            </td>
+                        </tr>`;
+                }).join('');
+
+                tbody.innerHTML = rows || `<tr class="empty-row"><td colspan="4">${
+                    this.assos.length ? 'Aucune association ne correspond à la recherche.' : 'Aucune association enregistrée pour le moment.'
+                }</td></tr>`;
+
+                document.getElementById('assos-total').textContent = `${this.formatMoney(total)} F CFA`;
+                document.getElementById('assos-count').textContent =
+                    `${this.assos.length} association${this.assos.length > 1 ? 's' : ''}`;
+            }
+
+            // --- Export ---
+            exportCsv(type) {
+                let rows, filename;
+                if (type === 'clubs') {
+                    if (!this.clubs.length) return this.toast('Aucun club à exporter', 'error');
+                    rows = [['Club', 'Critères', 'Montant (F CFA)']];
+                    this.clubs.forEach(c => {
+                        const crit = CLUB_CRITERIA.filter(x => c.criteria[x.key]).map(x => x.short).join(' / ');
+                        rows.push([c.name, crit, this.calculateClubAmount(c.criteria)]);
+                    });
+                    filename = 'clubs.csv';
+                } else {
+                    if (!this.assos.length) return this.toast('Aucune association à exporter', 'error');
+                    rows = [['Association', 'Activités culturelles', 'Montant (F CFA)']];
+                    this.assos.forEach(a => rows.push([a.name, a.activites || '', a.amount]));
+                    filename = 'associations.csv';
+                }
+
+                const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+                const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                URL.revokeObjectURL(url);
+                this.toast('Export CSV généré', 'success');
+            }
+
+            // --- Utilities ---
+            formatMoney(amount) {
+                return new Intl.NumberFormat('fr-FR').format(amount);
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            toast(message, type = 'info') {
+                const container = document.getElementById('toast-container');
+                const el = document.createElement('div');
+                el.className = `toast ${type}`;
+                el.textContent = message;
+                container.appendChild(el);
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.3s';
+                    el.style.opacity = '0';
+                    setTimeout(() => el.remove(), 300);
+                }, 2500);
+            }
+
+            // --- Event Handlers ---
+            setupEventListeners() {
+                // Tabs
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        const target = tab.dataset.tab;
+                        document.getElementById('clubs-section').classList.toggle('hidden', target !== 'clubs');
+                        document.getElementById('assos-section').classList.toggle('hidden', target !== 'assos');
+                    });
+                });
+
+                // Live preview when criteria change
+                document.getElementById('club-criteria').addEventListener('change', () => this.updateClubPreview());
+
+                // Save / cancel club
+                document.getElementById('add-club').addEventListener('click', () => {
+                    const name = document.getElementById('club-name').value.trim();
+                    if (!name) return this.toast('Veuillez saisir un nom pour le club', 'error');
+                    this.saveClub(name, this.readClubCriteria());
+                });
+                document.getElementById('cancel-club').addEventListener('click', () => this.resetClubForm());
+
+                // Save / cancel association
+                document.getElementById('add-asso').addEventListener('click', () => {
+                    const name = document.getElementById('asso-name').value.trim();
+                    const amount = parseInt(document.getElementById('asso-amount').value, 10);
+                    const activites = document.getElementById('asso-activites').value.trim();
+                    if (!name) return this.toast("Veuillez saisir un nom pour l'association", 'error');
+                    if (isNaN(amount) || amount < 0) return this.toast('Montant invalide', 'error');
+                    this.saveAsso(name, amount, activites);
+                });
+                document.getElementById('cancel-asso').addEventListener('click', () => this.resetAssoForm());
+
+                // Reset all
+                document.getElementById('reset-clubs').addEventListener('click', () => {
+                    if (!this.clubs.length) return this.toast('Aucun club à supprimer', 'info');
+                    if (confirm('Êtes-vous sûr de vouloir supprimer tous les clubs ?')) {
+                        this.clubs = [];
+                        this.saveToStorage('clubs', this.clubs);
+                        this.resetClubForm();
+                        this.render();
+                        this.toast('Tous les clubs ont été supprimés', 'info');
+                    }
+                });
+                document.getElementById('reset-assos').addEventListener('click', () => {
+                    if (!this.assos.length) return this.toast('Aucune association à supprimer', 'info');
+                    if (confirm('Êtes-vous sûr de vouloir supprimer toutes les associations ?')) {
+                        this.assos = [];
+                        this.saveToStorage('assos', this.assos);
+                        this.resetAssoForm();
+                        this.render();
+                        this.toast('Toutes les associations ont été supprimées', 'info');
+                    }
+                });
+
+                // Export
+                document.getElementById('export-clubs').addEventListener('click', () => this.exportCsv('clubs'));
+                document.getElementById('export-assos').addEventListener('click', () => this.exportCsv('assos'));
+
+                // Search
+                document.getElementById('clubs-search').addEventListener('input', (e) => {
+                    this.clubsFilter = e.target.value;
+                    this.renderClubs();
+                });
+                document.getElementById('assos-search').addEventListener('input', (e) => {
+                    this.assosFilter = e.target.value;
+                    this.renderAssos();
+                });
+
+                // Delegated edit/delete actions
+                document.getElementById('clubs-tbody').addEventListener('click', (e) => {
+                    const btn = e.target.closest('[data-action]');
+                    if (!btn) return;
+                    if (btn.dataset.action === 'edit-club') this.startEditClub(btn.dataset.id);
+                    if (btn.dataset.action === 'delete-club') this.deleteClub(btn.dataset.id);
+                });
+                document.getElementById('assos-tbody').addEventListener('click', (e) => {
+                    const btn = e.target.closest('[data-action]');
+                    if (!btn) return;
+                    if (btn.dataset.action === 'edit-asso') this.startEditAsso(btn.dataset.id);
+                    if (btn.dataset.action === 'delete-asso') this.deleteAsso(btn.dataset.id);
+                });
+
+                // Enter key support
+                document.getElementById('club-name').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') document.getElementById('add-club').click();
+                });
+                document.getElementById('asso-name').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') document.getElementById('add-asso').click();
+                });
+                document.getElementById('asso-amount').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') document.getElementById('add-asso').click();
+                });
+            }
+        }
+
+        const budgetManager = new BudgetManager();
+    </script>
+</body>
+</html>
